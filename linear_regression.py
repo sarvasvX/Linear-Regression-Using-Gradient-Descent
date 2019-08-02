@@ -1,4 +1,5 @@
 from numpy import *
+from tqdm import trange # for a fancy looking progress bar while running the algorithm (use with for loop) 
 
 def mean_sq_error(b, m, data):
     squared_error = 0
@@ -35,28 +36,32 @@ def run_gradient_descent(b_init, m_init, data, learning_rate, num_of_iterations)
     m_final = m_init
 
     # run gradient descent for the given number of iterations
-    for i in range(num_of_iterations):
+    for i in trange(num_of_iterations):
         (b_final, m_final) = gradient_descent(b_final, m_final, array(data), learning_rate)
 
 
     # return the final values of b and m
     return (b_final, m_final)
 
+def run_linear_regression():
+  # load data
+  dataset = genfromtxt('data.csv', delimiter= ',')
 
-# load data
-dataset = genfromtxt('data.csv', delimiter= ',')
+  # define hyperparameters
+  learning_rate = 0.0001
+  b_init = 0 # y-intercept
+  m_init = 0 # slope of regression line
+  num_of_iterations = 100000
+  
+  # start gradient descent
+  print("\n Starting gradient descent at b =", b_init, ", m =", m_init, ", error =", mean_sq_error(b_init, m_init, dataset))
+  print("Running...")
+  (b_init, m_init) = run_gradient_descent(b_init, m_init, dataset, learning_rate, num_of_iterations)
+  
+  #print final results
+  print("Gradient descent successful...")
+  print("After", num_of_iterations,  "iterations, b =", b_init, ", m =", m_init, "error =", mean_sq_error(b_init, m_init, dataset))
 
-# define hyperparameters
-learning_rate = 0.0001
-b_init = 0 # y-intercept
-m_init = 0 # slope of regression line
-num_of_iterations = 1000
 
-# start gradient descent
-print("Starting gradient descent at b =", b_init, ", m =", m_init, ", error =", mean_sq_error(b_init, m_init, dataset))
-print("Running...")
-(b_init, m_init) = run_gradient_descent(b_init, m_init, dataset, learning_rate, num_of_iterations)
-
-#print final results
-print("Gradient descent successful...")
-print("After", num_of_iterations,  "iterations, b =", b_init, ", m =", m_init, "error =", mean_sq_error(b_init, m_init, dataset))
+if __name__ == '__main__':
+  run_linear_regression()
