@@ -7,7 +7,7 @@ def mean_sq_error(b, m, data):
     for i in range(len(data)):
         x = data[i, 0]
         y = data[i, 1]
-        suqared_error += (y - (m * x + b))**2  #this will calculate squared error
+        squared_error += (y - (m * x + b))**2  #this will calculate squared error
 
     # for mean squared error, divide squared error by number of data points or len(data)
     return squared_error / float(len(data)) #float bc we want error to be precise
@@ -26,7 +26,7 @@ def gradient_descent(b_init, m_init, data, learning_rate):
 
     #update and return b_init and m_init to b_new and m_new respectively
     b_new = b_init - (learning_rate * gradient_wrt_b)
-    m_new = m_init - (learning_rate * gradiet_wrt_m)
+    m_new = m_init - (learning_rate * gradient_wrt_m)
     return (b_new, m_new)
 
 def run_gradient_descent(b_init, m_init, data, learning_rate, num_of_iterations):
@@ -42,25 +42,21 @@ def run_gradient_descent(b_init, m_init, data, learning_rate, num_of_iterations)
     # return the final values of b and m
     return (b_final, m_final)
 
-def main():
-    # load data
-    dataset = genfromtxt('dataset', delimeter = ',')
 
-    # define hyperparameters
-    learning_rate = 0.0001
-    b_init = 0 # y-intercept
-    m_init = 0 # slope of regression line
-    num_of_iterations = 1000
+# load data
+dataset = genfromtxt('data.csv', delimiter= ',')
 
-    # start gradient descent
-    print("Starting gradient descent at b = {0}, m = {1}, error = {2}".format(b_init, m_init, mean_sq_error(b_init, m_init, dataset)))
-    print("Running...")
-    (b_init, m_init) = run_gradient_descent(b_init, m_init, dataset, learning_rate, num_of_iterations)
+# define hyperparameters
+learning_rate = 0.0001
+b_init = 0 # y-intercept
+m_init = 0 # slope of regression line
+num_of_iterations = 1000
 
-    #print final results
-    print("Gradient descent successful...")
-    print("After {0} iterations, b = {1}, m = {2}, error = {3}".format(num_of_iterations, b_init, m_init, mean_sq_error(b_init, m_init, dataset))
+# start gradient descent
+print("Starting gradient descent at b =", b_init, ", m =", m_init, ", error =", mean_sq_error(b_init, m_init, dataset))
+print("Running...")
+(b_init, m_init) = run_gradient_descent(b_init, m_init, dataset, learning_rate, num_of_iterations)
 
-
-if __name__ == "__main__":
-    main()
+#print final results
+print("Gradient descent successful...")
+print("After", num_of_iterations,  "iterations, b =", b_init, ", m =", m_init, "error =", mean_sq_error(b_init, m_init, dataset))
