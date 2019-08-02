@@ -62,5 +62,5 @@ def main():
     print("After {0} iterations, b = {1}, m = {2}, error = {3}".format(num_of_iterations, b_init, m_init, mean_sq_error(b_init, m_init, dataset))
 
 
-if __name__ == "__main()__":
+if __name__ == "__main__":
     main()
